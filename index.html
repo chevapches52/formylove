@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i love sofa</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS анимации -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Современные шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: #9a7b8a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Hero секция */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('photo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        /* Текст секций */
+        .section-title {
+            background: linear-gradient(135deg, #ffffff 0%, #f0e0e5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Слайдер */
+        .heart-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #7a5b6a 0%, #7a5b6a 100%);
+            border-radius: 10px;
+            outline: none;
+        }
+        .heart-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 50px;
+            height: 50px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b9d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat;
+            background-size: contain;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .heart-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .heart-slider::-moz-range-thumb {
+            width: 50px;
+            height: 50px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b9d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Анимация вылета PNG */
+        @keyframes flyIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .overlay-image {
+            animation: flyIn 0.6s ease-out forwards;
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        /* Коллаж фото */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            aspect-ratio: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            .photo-grid {
+                gap: 8px;
+            }
+            .photo-item {
+                border-radius: 8px;
+            }
+        }
+
+        /* Сердце из текста */
+        .heart-shape {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            margin: 0 auto;
+        }
+        
+        .heart-line {
+            position: absolute;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 300;
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: nowrap;
+        }
+        
+        /* Верхние части сердца */
+        .heart-line-1 {
+            top: 0;
+            left: 15%;
+            font-size: 14px;
+        }
+        
+        .heart-line-2 {
+            top: 0;
+            right: 15%;
+            font-size: 14px;
+        }
+        
+        .heart-line-3 {
+            top: 50px;
+            left: 10%;
+            font-size: 14px;
+        }
+        
+        .heart-line-4 {
+            top: 50px;
+            right: 10%;
+            font-size: 14px;
+        }
+        
+        /* Середина */
+        .heart-line-5 {
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15px;
+        }
+        
+        .heart-line-6 {
+            top: 160px;
+            left: 20%;
+            font-size: 14px;
+        }
+        
+        .heart-line-7 {
+            top: 160px;
+            right: 20%;
+            font-size: 14px;
+        }
+        
+        /* Низ сердца */
+        .heart-line-8 {
+            top: 220px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15px;
+        }
+        
+        .heart-line-9 {
+            top: 280px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+        }
+        
+        .heart-line-10 {
+            top: 340px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+        }
+
+        @media (max-width: 640px) {
+            .heart-shape {
+                height: 350px;
+            }
+            .heart-line {
+                font-size: 13px;
+            }
+            .heart-line-1, .heart-line-2, .heart-line-3, .heart-line-4,
+            .heart-line-6, .heart-line-7 {
+                font-size: 12px;
+            }
+            .heart-line-1 { left: 10%; }
+            .heart-line-2 { right: 10%; }
+            .heart-line-3 { left: 5%; top: 45px; }
+            .heart-line-4 { right: 5%; top: 45px; }
+            .heart-line-5 { top: 100px; }
+            .heart-line-6 { top: 145px; left: 15%; }
+            .heart-line-7 { top: 145px; right: 15%; }
+            .heart-line-8 { top: 200px; }
+            .heart-line-9 { top: 250px; }
+            .heart-line-10 { top: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO СЕКЦИЯ -->
+    <section class="hero-bg min-h-screen flex flex-col items-center justify-center text-white relative">
+        
+        <!-- PNG картинка прижата к самому верху -->
+        <div class="overlay-image absolute top-0 left-0 right-0 z-20 text-center">
+            <img src="overlay.jpg" alt="overlay" class="w-full h-auto">
+        </div>
+        
+    </section>
+
+    <!-- ПРИЗНАНИЕ 1 -->
+    <section class="min-h-screen flex items-center justify-center px-6 py-20 bg-[#8a6b7a]">
+        <div class="max-w-2xl text-center" data-aos="fade-up">
+            <h1 class="text-4xl md:text-6xl font-bold mb-12 section-title">надеюсь это не слишком кринжово</h1>
+            
+            <p class="text-lg md:text-xl text-white/90 leading-relaxed font-light">
+                я тебя люблю, I love you, Je t'aime, Ti amo, Ich liebe dich, 我爱你,
+                愛してる, 사랑해, Эп сана юрататӑп, أحبك, Seni seviyorum, Te amo
+                
+            </p>
+            
+        </div>
+    </section>
+
+    <!-- КОЛЛАЖ ИЗ ФОТО -->
+    <section class="min-h-screen flex items-center justify-center px-6 py-20 bg-[#9a7b8a]">
+        <div class="w-full max-w-3xl" data-aos="fade-up">
+            <h1 class="text-4xl md:text-6xl font-bold mb-12 section-title">простыми словами не передать <3</h1>
+            
+            <div class="photo-grid">
+                <div class="photo-item" data-aos="fade-up" data-aos-delay="0">
+                    <img src="photo1.jpg" alt="Момент 1">
+                </div>
+                <div class="photo-item" data-aos="fade-up" data-aos-delay="100">
+                    <img src="photo2.jpg" alt="Момент 2">
+                </div>
+                <div class="photo-item" data-aos="fade-up" data-aos-delay="200">
+                    <img src="photo3.jpg" alt="Момент 3">
+                </div>
+                <div class="photo-item" data-aos="fade-up" data-aos-delay="300">
+                    <img src="photo4.jpg" alt="Момент 4">
+                </div>
+                <div class="photo-item" data-aos="fade-up" data-aos-delay="400">
+                    <img src="photo5.jpg" alt="Момент 5">
+                </div>
+                <div class="photo-item" data-aos="fade-up" data-aos-delay="500">
+                    <img src="photo6.jpg" alt="Момент 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОЦЕНКА САЙТА -->
+    <section class="min-h-screen flex items-center justify-center px-6 py-20 bg-[#8a6b7a]">
+        <div class="max-w-md w-full text-center" data-aos="zoom-in">
+            <h1 class="text-4xl md:text-6xl font-bold mb-12 section-title">выбирай</h1>
+            <p class="text-white/70 mb-12 text-sm">Двигай сердечко вправо</p>
+            
+            <!-- Слайдер -->
+            <div class="relative">
+                <input type="range" id="ratingSlider" min="0" max="100" value="0" 
+                       class="heart-slider w-full cursor-pointer">
+                <div id="ratingText" class="mt-12 text-2xl font-light opacity-0 transition-opacity duration-500">
+                    <span id="ratingEmoji" class="text-5xl"></span>
+                    <p id="ratingMessage" class="mt-6 text-lg text-white/80"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Аудио -->
+    <audio id="bgMusic" loop playsinline preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- AOS библиотека -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Инициализация AOS
+        AOS.init({
+            duration: 1200,
+            once: true,
+            offset: 100
+        });
+
+        // Управление музыкой
+        const audio = document.getElementById('bgMusic');
+        let isPlaying = false;
+        let musicStarted = false;
+
+        // Функция запуска музыки
+        function playMusic() {
+            if (musicStarted) return;
+            
+            musicStarted = true;
+            audio.play().then(() => {
+                isPlaying = true;
+                console.log('Музыка играет!');
+            }).catch(e => {
+                console.log('Ошибка автозапуска:', e);
+                musicStarted = false;
+            });
+        }
+
+        // Пробуем запустить при загрузке
+        window.addEventListener('load', () => {
+            setTimeout(playMusic, 300);
+        });
+
+        // ЛОВИМ ВСЕ возможные взаимодействия
+        const events = ['click', 'touchstart', 'touchend', 'touchmove', 'keydown', 'scroll', 'wheel'];
+        
+        events.forEach(event => {
+            window.addEventListener(event, () => {
+                if (!musicStarted) {
+                    playMusic();
+                }
+            }, { passive: true, capture: true });
+        });
+
+        // Дополнительно отслеживаем скролл через Intersection Observer
+        let observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !musicStarted) {
+                    playMusic();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Наблюдаем за второй секцией
+        const sections = document.querySelectorAll('section');
+        if (sections[1]) {
+            observer.observe(sections[1]);
+        }
+
+        // Слайдер оценки
+        const slider = document.getElementById('ratingSlider');
+        const ratingText = document.getElementById('ratingText');
+        const ratingEmoji = document.getElementById('ratingEmoji');
+        const ratingMessage = document.getElementById('ratingMessage');
+
+        slider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            ratingText.style.opacity = '1';
+            
+            if (value < 30) {
+                ratingEmoji.textContent = '😐';
+                ratingMessage.textContent = 'ого';
+            } else if (value < 60) {
+                ratingEmoji.textContent = '😊';
+                ratingMessage.textContent = 'прикольно';
+            } else if (value < 90) {
+                ratingEmoji.textContent = '🥰';
+                ratingMessage.textContent = 'круто!!';
+            } else {
+                ratingEmoji.textContent = '💖';
+                ratingMessage.textContent = 'я тебя люблю!!';
+            }
+        });
+    </script>
+</body>
+</html>
