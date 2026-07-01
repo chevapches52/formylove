@@ -39,10 +39,27 @@
         
         /* Hero секция */
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('photo.jpg');
-            background-size: cover;
-            background-position: center;
-        }
+    background-color: #000;
+    position: relative;
+}
+
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('photo.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.hero-bg > * {
+    position: relative;
+    z-index: 1;
+}
         
         /* Текст секций */
         .section-title {
